@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workbook Sessão 1 - Permissão: Simples Assim</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #F5F5F0 0%, #E8E4DC 100%);
+            color: #2C2C2C;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #D4A59A;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2C2C2C;
+            margin-bottom: 8px;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            color: #D4A59A;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .header .session-title {
+            font-size: 24px;
+            color: #5B8A91;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2C2C2C;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #F5F5F0;
+        }
+
+        .section-description {
+            background: #F9F8F6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border-left: 4px solid #D4A59A;
+        }
+
+        .question {
+            margin-bottom: 32px;
+        }
+
+        .question-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .question-hint {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #E8E4DC;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #D4A59A;
+            box-shadow: 0 0 0 3px rgba(212, 165, 154, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #F9F8F6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #F0EDE8;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #5B8A91 0%, #4A7179 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .score-display h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .score-display p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .subscores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .subscore-card {
+            background: #F9F8F6;
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 4px solid #D4A59A;
+            text-align: center;
+        }
+
+        .subscore-card h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subscore-card .score {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2C2C2C;
+        }
+
+        .interpretation {
+            background: #FFF9F5;
+            border: 2px solid #D4A59A;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .interpretation h3 {
+            color: #D4A59A;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #D4A59A;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #C29587;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 165, 154, 0.3);
+        }
+
+        .btn-secondary {
+            background: #5B8A91;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4A7179;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(91, 138, 145, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #2C2C2C;
+            border: 2px solid #E8E4DC;
+        }
+
+        .btn-outline:hover {
+            border-color: #D4A59A;
+            background: #FFF9F5;
+        }
+
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #D4EDDA;
+            border: 1px solid #C3E6CB;
+            color: #155724;
+        }
+
+        .alert-info {
+            background: #D1ECF1;
+            border: 1px solid #BEE5EB;
+            color: #0C5460;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #F5F5F0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .buttons {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- CABEÇALHO -->
+        <div class="header">
+            <h1>Permissão: Simples Assim</h1>
+            <p class="subtitle">Programa de Autonomia Feminina</p>
+            <p class="session-title">📍 Sessão 1: Você Está Aqui</p>
+        </div>
+
+        <!-- ALERTA DE SALVAMENTO -->
+        <div id="saveAlert" class="alert alert-success">
+            ✅ Progresso salvo com sucesso!
+        </div>
+
+        <!-- SEÇÃO 1: INFORMAÇÕES BÁSICAS -->
+        <div class="section">
+            <h2 class="section-title">💬 Informações Básicas</h2>
+            
+            <div class="question">
+                <label class="question-label">Nome:</label>
+                <input type="text" id="nome" placeholder="Seu nome">
+            </div>
+
+            <div class="question">
+                <label class="question-label">Data da Sessão 1:</label>
+                <input type="text" id="data" placeholder="DD/MM/AAAA">
+            </div>
+        </div>
+
+        <!-- SEÇÃO 2: SEU P-SCORE -->
+        <div class="section">
+            <h2 class="section-title">📊 Seu P-Score</h2>
+            
+            <div class="section-description">
+                <p><strong>O P-Score mede sua autonomia nos 3 eixos.</strong></p>
+                <p style="margin-top: 12px;">
+                    As 30 perguntas do DAP são sobre <strong>bloqueios</strong> (culpa, dificuldades, evitações).<br>
+                    Quanto MAIS bloqueios você tem, MENOR seu P-Score.<br>
+                    Quanto MENOR o P-Score, MENOS autonomia.
+                </p>
+                <p style="margin-top: 12px; font-weight: 600; color: #D4A59A;">
+                    P-Score ALTO (91-120) = POUCOS bloqueios = ALTA autonomia ✅<br>
+                    P-Score BAIXO (0-30) = MUITOS bloqueios = BAIXA autonomia ⚠️
+                </p>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Seu P-Score Total (0-120):</label>
+                <input type="number" id="pscore-total" min="0" max="120" placeholder="Digite seu P-Score">
+            </div>
+
+            <div class="subscores">
+                <div class="subscore-card">
+                    <h3>P-Ganhos</h3>
+                    <input type="number" id="pscore-ganhos" min="0" max="40" placeholder="0-40" 
+                           style="border: none; background: transparent; text-align: center; font-size: 36px; font-weight: 700; color: #2C2C2C; width: 100%;">
+                    <p style="font-size: 12px; color: #666; margin-top: 8px;">Eixo Financeiro</p>
+                </div>
+                <div class="subscore-card">
+                    <h3>P-Autocuidado</h3>
+                    <input type="number" id="pscore-autocuidado" min="0" max="40" placeholder="0-40"
+                           style="border: none; background: transparent; text-align: center; font-size: 36px; font-weight: 700; color: #2C2C2C; width: 100%;">
+                    <p style="font-size: 12px; color: #666; margin-top: 8px;">Eixo Corporal</p>
+                </div>
+                <div class="subscore-card">
+                    <h3>P-Limites</h3>
+                    <input type="number" id="pscore-limites" min="0" max="40" placeholder="0-40"
+                           style="border: none; background: transparent; text-align: center; font-size: 36px; font-weight: 700; color: #2C2C2C; width: 100%;">
+                    <p style="font-size: 12px; color: #666; margin-top: 8px;">Eixo Emocional</p>
+                </div>
+            </div>
+
+            <div id="interpretation-box" class="interpretation" style="display: none;">
+                <h3 id="interpretation-title">Sua Faixa:</h3>
+                <p id="interpretation-text"></p>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 3: ONDE VOCÊ ESTÁ BLOQUEADA -->
+        <div class="section">
+            <h2 class="section-title">🎯 Onde Você Está Mais Bloqueada?</h2>
+            
+            <div class="section-description">
+                <p>Olhe seus 3 subcores. Qual é o MENOR?</p>
+                <p style="margin-top: 8px;">O eixo com menor pontuação é onde você tem mais bloqueios.</p>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Meu eixo mais bloqueado é:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="eixo-bloqueado" value="ganhos">
+                        <span>P-Ganhos (Financeiro) - Bloqueio em ganhar/gerir dinheiro</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="eixo-bloqueado" value="autocuidado">
+                        <span>P-Autocuidado (Corporal) - Bloqueio em cuidar de mim/descansar</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="eixo-bloqueado" value="limites">
+                        <span>P-Limites (Emocional) - Bloqueio em dizer NÃO/estabelecer limites</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 4: O QUE VOCÊ SENTE AGORA -->
+        <div class="section">
+            <h2 class="section-title">💭 O Que Você Sente Agora?</h2>
+            
+            <div class="question">
+                <label class="question-label">Quando você viu seu P-Score, qual foi sua primeira reação?</label>
+                <span class="question-hint">Seja honesta. Sem julgamento.</span>
+                <textarea id="reacao-pscore" placeholder="Escreva livremente..."></textarea>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Complete: "Eu não consigo _____________ porque ____________"</label>
+                <span class="question-hint">Exemplo: "Eu não consigo dizer NÃO porque tenho medo de magoar as pessoas"</span>
+                <textarea id="nao-consigo" placeholder="Escreva sua frase..."></textarea>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Se você tivesse permissão total para TUDO, o que você faria AMANHÃ que hoje não faz?</label>
+                <span class="question-hint">Seja específica. Não pense no "como". Só no "o quê".</span>
+                <textarea id="permissao-total" placeholder="Escreva..."></textarea>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 5: IDENTIFICANDO BLOQUEIOS -->
+        <div class="section">
+            <h2 class="section-title">🔍 Identificando Seus Bloqueios</h2>
+            
+            <div class="section-description">
+                <p>Marque TODAS as afirmações que se aplicam a você <strong>AGORA</strong>:</p>
+            </div>
+
+            <div class="question">
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="1">
+                        <span>Eu dependo financeiramente de alguém e isso me incomoda</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="2">
+                        <span>Eu sinto culpa quando gasto dinheiro comigo</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="3">
+                        <span>Eu tenho dificuldade em cobrar o que meu trabalho vale</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="4">
+                        <span>Eu só descanso quando estou doente ou exausta</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="5">
+                        <span>Eu coloco as necessidades dos outros antes das minhas</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="6">
+                        <span>Eu sinto culpa quando faço algo prazeroso só para mim</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="7">
+                        <span>Eu tenho dificuldade em dizer NÃO mesmo quando quero</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="8">
+                        <span>Eu aceito comportamentos desrespeitosos para evitar conflito</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="9">
+                        <span>Eu sinto que preciso agradar todo mundo o tempo todo</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="bloqueios" value="10">
+                        <span>Eu mantenho relações que me drenam por obrigação ou culpa</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Quantos bloqueios você marcou?</label>
+                <input type="number" id="total-bloqueios" min="0" max="10" placeholder="0-10" readonly style="background: #F9F8F6; font-weight: 700; font-size: 20px;">
+            </div>
+        </div>
+
+        <!-- SEÇÃO 6: SEU PRIMEIRO MICROPASSO -->
+        <div class="section">
+            <h2 class="section-title">🎯 Seu Primeiro Micropasso</h2>
+            
+            <div class="section-description">
+                <p><strong>Micropasso:</strong> Uma ação PEQUENA, CONCRETA e EXECUTÁVEL em até 48h.</p>
+                <p style="margin-top: 8px;">Não é grande. Não é perfeito. É só o próximo passo.</p>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Meu primeiro micropasso será:</label>
+                <span class="question-hint">Exemplo: "Vou guardar R$ 10 numa conta separada só minha" ou "Vou dizer NÃO para UMA coisa que não quero fazer"</span>
+                <textarea id="micropasso" placeholder="Seja específica..."></textarea>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Quando vou executar? (dia e hora):</label>
+                <input type="text" id="quando-micropasso" placeholder="Ex: Terça-feira, 15h">
+            </div>
+
+            <div class="question">
+                <label class="question-label">O que pode me impedir?</label>
+                <span class="question-hint">Antecipe as barreiras</span>
+                <textarea id="barreiras" placeholder="Escreva..."></textarea>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Como vou contornar essas barreiras?</label>
+                <textarea id="contorno" placeholder="Escreva..."></textarea>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 7: COMPROMISSO -->
+        <div class="section">
+            <h2 class="section-title">✍️ Compromisso Comigo Mesma</h2>
+            
+            <div class="interpretation">
+                <p style="font-size: 16px; line-height: 1.8;">
+                    Eu, <strong id="nome-compromisso">[seu nome]</strong>, me comprometo a executar meu primeiro micropasso até <strong id="data-compromisso">[data]</strong>.
+                </p>
+                <p style="margin-top: 16px; font-size: 16px; line-height: 1.8;">
+                    Eu entendo que este programa não vai funcionar se eu não agir. Autonomia não é teoria. É prática.
+                </p>
+                <p style="margin-top: 16px; font-size: 16px; font-weight: 600;">
+                    Simples assim.
+                </p>
+            </div>
+
+            <div class="question">
+                <label class="question-label">Assinatura (digite seu nome):</label>
+                <input type="text" id="assinatura" placeholder="Seu nome completo">
+            </div>
+
+            <div class="question">
+                <label class="question-label">Data de hoje:</label>
+                <input type="text" id="data-hoje" placeholder="DD/MM/AAAA">
+            </div>
+        </div>
+
+        <!-- BOTÕES DE AÇÃO -->
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="salvarProgresso()">💾 Salvar Progresso</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir PDF</button>
+            <button class="btn btn-outline" onclick="compartilharEmail()">📧 Enviar por E-mail</button>
+        </div>
+
+        <!-- RODAPÉ -->
+        <div class="footer">
+            <p>Permissão: Simples Assim © 2025</p>
+            <p style="margin-top: 8px;">Workbook Sessão 1 - Você Está Aqui</p>
+        </div>
+    </div>
+
+    <script>
+        // Contador de bloqueios automático
+        document.querySelectorAll('input[name="bloqueios"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const total = document.querySelectorAll('input[name="bloqueios"]:checked').length;
+                document.getElementById('total-bloqueios').value = total;
+            });
+        });
+
+        // Interpretação automática do P-Score
+        document.getElementById('pscore-total').addEventListener('input', function() {
+            const score = parseInt(this.value);
+            const interpretationBox = document.getElementById('interpretation-box');
+            const title = document.getElementById('interpretation-title');
+            const text = document.getElementById('interpretation-text');
+
+            if (score >= 0 && score <= 120) {
+                interpretationBox.style.display = 'block';
+                
+                if (score <= 30) {
+                    title.textContent = '⚠️ Permissão Crítica (0-30)';
+                    text.textContent = 'Múltiplos bloqueios ativos. Autonomia severamente comprometida. Você provavelmente sente que vive a vida de outras pessoas. Mas você deu o primeiro passo ao estar aqui.';
+                } else if (score <= 60) {
+                    title.textContent = '🟡 Permissão Bloqueada (31-60)';
+                    text.textContent = 'Déficit significativo de permissão interna. Bloqueios presentes em vários eixos. Há trabalho a fazer, mas é absolutamente possível.';
+                } else if (score <= 90) {
+                    title.textContent = '🟢 Permissão Parcial (61-90)';
+                    text.textContent = 'Você já avançou em algumas áreas, mas falta integração sistêmica. Autonomia está presente em partes da sua vida, mas não em todas.';
+                } else {
+                    title.textContent = '✅ Permissão Plena (91-120)';
+                    text.textContent = 'Alta autonomia. Poucos bloqueios. Você consegue escolher livremente nos 3 eixos. Agora é sobre maximizar e manter.';
+                }
+            } else {
+                interpretationBox.style.display = 'none';
+            }
+        });
+
+        // Atualizar nome no compromisso
+        document.getElementById('nome').addEventListener('input', function() {
+        });
+
+        document.getElementById('quando-micropasso').addEventListener('input', function() {
+        });
+
+        // Salvar progresso no localStorage
+        function salvarProgresso() {
+            const dados = {
+                nome: document.getElementById('nome').value,
+                data: document.getElementById('data').value,
+                pscoreTotal: document.getElementById('pscore-total').value,
+                pscoreGanhos: document.getElementById('pscore-ganhos').value,
+                pscoreAutocuidado: document.getElementById('pscore-autocuidado').value,
+                pscoreLimites: document.getElementById('pscore-limites').value,
+                reacaoPscore: document.getElementById('reacao-pscore').value,
+                naoConsigo: document.getElementById('nao-consigo').value,
+                permissaoTotal: document.getElementById('permissao-total').value,
+                micropasso: document.getElementById('micropasso').value,
+                quandoMicropasso: document.getElementById('quando-micropasso').value,
+                barreiras: document.getElementById('barreiras').value,
+                contorno: document.getElementById('contorno').value,
+                assinatura: document.getElementById('assinatura').value,
+                dataHoje: document.getElementById('data-hoje').value
+            };
+
+            localStorage.setItem('workbook-sessao-1', JSON.stringify(dados));
+
+            // Mostrar alerta de sucesso
+            const alert = document.getElementById('saveAlert');
+            alert.classList.add('show');
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 3000);
+        }
+
+        // Carregar progresso salvo
+        function carregarProgresso() {
+            const dados = localStorage.getItem('workbook-sessao-1');
+            if (dados) {
+                const parsed = JSON.parse(dados);
+
+                // Trigger eventos para atualizar campos calculados
+                document.getElementById('pscore-total').dispatchEvent(new Event('input'));
+                document.getElementById('nome').dispatchEvent(new Event('input'));
+                document.getElementById('quando-micropasso').dispatchEvent(new Event('input'));
+            }
+        }
+
+        // Compartilhar por e-mail
+        function compartilharEmail() {
+            const subject = encodeURIComponent('Workbook Sessão 1 - ' + nome);
+            const body = encodeURIComponent('Meu workbook da Sessão 1 está preenchido!\n\nPermissão: Simples Assim\n\n[Anexar PDF impresso]');
+            
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        // Carregar progresso ao iniciar página
+        window.addEventListener('load', carregarProgresso);
+
+        // Auto-salvar a cada 2 minutos
+        setInterval(salvarProgresso, 120000);
+    </script>
+</body>
+</html>
